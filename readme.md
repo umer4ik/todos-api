@@ -12,6 +12,8 @@ $ deno run --allow-net --allow-read --watch main.ts
 ```
 * visit [`http://localhost:3001/`](`http://localhost:3001/`)
 
+The API is also deployed to Deno Deploy and available by address [https://umer4ik-todos-api.deno.dev/](umer4ik-todos-api.deno.dev) 
+
 ## The API
 
 ```typescript
