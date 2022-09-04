@@ -42,11 +42,13 @@ export const addTodo = (todo: Pick<Todo, 'text'>) => {
   if (todos.length === 1000) {
     resetTodos()
   }
-  todos.push({
+  const _todo = {
     ...todo,
     id,
     completed: false
-  })
+  }
+  todos.push(_todo)
+  return _todo
 }
 
 export const getTodo = (id: string) => {
@@ -61,11 +63,13 @@ export const getTodo = (id: string) => {
 export const updateTodo = (id: string, todo: Pick<Todo, 'text' | 'completed'>) => {
   const index = todos.findIndex(t => t.id === id)
   if (index > -1) {
-    todos[index] = {
+    const _todo = {
       ...todo,
       text: limitText(todo.text),
       id
     }
+    todos[index] = _todo
+    return _todo
   } else {
     throw new Error(`Todo with id ${id} not found`)
   }
@@ -74,7 +78,8 @@ export const updateTodo = (id: string, todo: Pick<Todo, 'text' | 'completed'>) =
 export const deleteTodo = (id: string) => {
   const index = todos.findIndex(t => t.id === id)
   if (index > -1) {
-    todos.splice(index, 1)
+    const [todo] = todos.splice(index, 1)
+    return todo
   } else {
     throw new Error(`Todo with id ${id} not found`)
   }

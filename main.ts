@@ -1,6 +1,6 @@
 import { Application, Router, Response } from "https://deno.land/x/oak@v10.6.0/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts"
-import  * as TodosAPI from './todos.ts'
+import * as TodosAPI from './todos.ts'
 import { Todo } from './todos.ts'
 
 const handleError = (response: Response, error: Error) => {
@@ -11,17 +11,24 @@ const handleError = (response: Response, error: Error) => {
 }
 
 const todosRouter = new Router({
-  prefix: '/api/v1'
+  prefix: '/api/v1/todos'
 })
 todosRouter
+  .use(
+    async (ctx, next) => {
+      ctx.response.headers.append('content-type', 'application/json')
+      await next()
+    }
+  )
   .get(
-    '/todos',
+    '/',
     (ctx) => {
+      console.log('request')
       ctx.response.body = JSON.stringify(TodosAPI.getTodos())
     }
   )
   .get(
-    '/todos/:id',
+    '/:id',
     (ctx) => {
       const { id } = ctx.params
       try {
@@ -33,39 +40,39 @@ todosRouter
     }
   )
   .post(
-    '/todos',
+    '/',
     async (ctx) => {
       try {
         const result = ctx.request.body({ type: 'json' })
         const todo: Pick<Todo, 'text'> = await result.value
-        TodosAPI.addTodo(todo)
-        ctx.response.body = JSON.stringify(todo)
+        const resTodo = TodosAPI.addTodo(todo)
+        ctx.response.body = JSON.stringify(resTodo)
       } catch (error) {
         handleError(ctx.response, error)
       }
     }
   )
   .put(
-    '/todos/:id',
+    '/:id',
     async (ctx) => {
       const { id } = ctx.params
       try {
         const result = ctx.request.body({ type: 'json' })
         const todo: Pick<Todo, 'text' | 'completed'> = await result.value
-        TodosAPI.updateTodo(id, todo)
-        ctx.response.body = JSON.stringify(todo)
+        const resTodo = TodosAPI.updateTodo(id, todo)
+        ctx.response.body = JSON.stringify(resTodo)
       } catch (error) {
         handleError(ctx.response, error)
       }
     }
   )
   .delete(
-    '/todos/:id',
+    '/:id',
     (ctx) => {
       const { id } = ctx.params
       try {
-        TodosAPI.deleteTodo(id)
-        ctx.response.body = JSON.stringify({})
+        const todo = TodosAPI.deleteTodo(id)
+        ctx.response.body = JSON.stringify(todo)
       } catch (error) {
         handleError(ctx.response, error)
       }
