@@ -1,4 +1,4 @@
-# Simple Deno API
+# Simple Todos API written in Deno
 
 The API is developed for playing with different libraries and frameworks
 
@@ -14,7 +14,7 @@ $ deno run --allow-net --allow-read --watch main.ts
 
 The API is also deployed to Deno Deploy and available by address [https://umer4ik-todos-api.deno.dev/](https://umer4ik-todos-api.deno.dev) 
 
-## The API
+## API
 
 ```typescript
 type Todo: {
@@ -54,3 +54,18 @@ Methods:
 *   **`POST`** `/api/v1/todos/reset-todos`
     
     resets all `Todo[]`
+
+## Auth
+
+API also simulates authentication and has protected routes.
+
+To get access token, send `POST` request to `/api/v1/auth/login` with body `{ email: "user@todos.api", password: "superpass" }`
+
+Todos API has protected copy of itself, urls are the same, but with `protected` path included, e.g. `/api/v1/protected/todos`
+
+Example of auth flow:
+
+* Send `POST` request to `/api/v1/auth/login` with body `{ email: "user@todos.api", password: "superpass" }`
+* Get `{ token: string }` from response
+* Send `GET` request to `/api/v1/protected/todos` with header `Authorization: Bearer <token>`
+
