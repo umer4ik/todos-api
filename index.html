@@ -88,26 +88,28 @@ type Todo: {
           <p>responses with <code>Todos[]</code></p>
         </li>
         <li>
-          <p><code><i>POST</i> /api/v1/todo</code></p>
+          <p><code><i>POST</i> /api/v1/todos</code></p>
           <p>creates a <code>Todo</code>, accepts <code>{ text: string }</code>, <code>string</code> is not more than 255 chars long</p>
           <p>responses with <code>Todo</code></p>
         </li>
         <li>
-          <p><code><i>GET</i> /api/v1/todo/:id</code></p>
+          <p><code><i>GET</i> /api/v1/todos/:id</code></p>
           <p>responses with <code>Todo</code></p>
         </li>
         <li>
-          <p><code><i>PUT</i> /api/v1/todo/:id</code></p>
+          <p><code><i>PUT</i> /api/v1/todos/:id</code></p>
           <p>updates a <code>Todo</code>, accepts <code>{ text: string, completed: boolean }</code>, <code>string</code> is not more than 255 chars long</p>
-          <p>reponses with <code>Todo</code></p>
+          <p>responses with <code>Todo</code></p>
         </li>
         <li>
-          <p><code><i>DELETE</i> /api/v1/todo/:id</code></p>
+          <p><code><i>DELETE</i> /api/v1/todos/:id</code></p>
           <p>deletes a <code>Todo</code></code></p>
+          <p>responses with deleted <code>Todo</code></p>
         </li>
         <li>
           <p><code><i>POST</i> /api/v1/reset-todos</code></p>
           <p>resets all <code>Todo[]</code></p>
+          <p>responses with empty object <code>{}</code></p>
         </li>
       </ul>
     </div>
